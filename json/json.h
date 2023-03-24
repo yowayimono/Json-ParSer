@@ -9,6 +9,8 @@
 #include <list>
 
 
+#include "Parser.h"
+
 
 using std::string;
 using std::cout;
@@ -82,7 +84,7 @@ public:
     bool operator == (const Json & other);
     bool operator != (const Json & other);
 
-    Json & operator [] (const Json & index);
+    Json & operator [] (int index);
     Json & operator [] (const char * key);
     Json & operator [] (const string & key);
 
@@ -103,6 +105,9 @@ public:
     {
         return (m_value.m_array)->end();
     }
+    string str() const;
+
+    void parse(const string & str);
 
 
 private:

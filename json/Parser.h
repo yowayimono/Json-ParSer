@@ -11,7 +11,7 @@
 
 
 #include <string>
-
+#include "json.h"
 namespace qwm{
     namespace json{
 class Parser{
@@ -27,15 +27,15 @@ private:
 
 
     Json parse_null();
-    Json parse_int();
+    Json parse_number();
     Json parse_bool();
-    Json Parse_double();
-    Json Parse_string();
+    //Json Parse_double()
+    string parse_string();
     Json parse_array();
     Json parse_object();
 
 
-    bool int_rang(int x,int lower,int upper)
+    bool in_range(int x,int lower,int upper)
     {
         return (x>=lower&&x<=upper);
     }
