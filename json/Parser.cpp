@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "Parser.h"
+
 #include "json.h"
 
 using namespace qwm::json;
@@ -20,7 +21,7 @@ Parser::~Parser()
 
 }
 
-void Parser::load(const string & str)
+void Parser::load(const string& str)
 {
     m_str=str;
     m_idx=0;
@@ -54,7 +55,8 @@ Json Parser::parse()
             return parse_null();
         case 't':
         case 'f':
-        return parse_bool();
+        	m_idx--;
+            return parse_bool();
         case '-':
         case '0':
         case '1':
@@ -102,7 +104,7 @@ Json Parser::parse_bool()
         m_idx+=5;
         return Json(false);
     }
-    throw std::logic_error("parse_bool error");
+    throw std::logic_error("sbsbsbsb  parse_bool error");
 }
 
 Json Parser::parse_number()
@@ -120,7 +122,7 @@ Json Parser::parse_number()
     else if(in_range(m_str[m_idx],'1','9'))
     {
         m_idx++;//数字往后移
-        while(in_range(m_str[m_idx],'1','9'))
+        while(in_range(m_str[m_idx],'0','9'))
         {
             m_idx++;
         }
@@ -201,7 +203,7 @@ Json Parser::parse_array()
         {
             break;
         }
-        if(ch==',')
+        if(ch!=',')
         {
             throw std::logic_error("expected ',' in array");
         }
@@ -213,7 +215,7 @@ Json Parser::parse_object()
 {
     Json obj(Json::json_object);
     char ch=get_next_token();
-    if(ch==']')
+    if(ch=='{')
     {
         return obj;
     }
@@ -225,7 +227,13 @@ Json Parser::parse_object()
         {
             throw std::logic_error("expected '\"' in object");
         }
-        string key=parse_string();
+        string key =parse_string();
+        char ch=get_next_token();
+        if(ch!=':')
+        {
+            throw logic_error("expexted '\' in object");
+        }
+        obj[key]=parse();
         ch=get_next_token();
         if(ch=='}')
         {

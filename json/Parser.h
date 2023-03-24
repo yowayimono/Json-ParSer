@@ -11,14 +11,18 @@
 
 
 #include <string>
+
 #include "json.h"
+
+
+
 namespace qwm{
     namespace json{
 class Parser{
 public:
     Parser();
     ~Parser();
-    void load(const string & str);
+    void load(const std::string & str);
     Json parse();
 
 private:
@@ -30,7 +34,7 @@ private:
     Json parse_number();
     Json parse_bool();
     //Json Parse_double()
-    string parse_string();
+    std::string parse_string();
     Json parse_array();
     Json parse_object();
 
@@ -41,7 +45,7 @@ private:
     }
 
 
-    string m_str;
+    std::string m_str;
     size_t m_idx;
 
 };

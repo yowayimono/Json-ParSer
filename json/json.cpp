@@ -399,14 +399,23 @@ Json & Json::operator [] (const string & key)
     }
     return (*(m_value.m_object))[key];
 }
-
+Json & Json::operator [] (const char* key)
+{
+    if(m_type!=json_object)
+    {
+        clear();
+        m_type=json_object;
+        m_value.m_object=new std::map<string,Json>();
+    }
+    return (*(m_value.m_object))[key];
+}
 Json::operator bool()
 {
     if(m_type!=json_bool)
     {
         throw std::logic_error("function Json::operator [bool] request bool error");
     }
-    return m_value.m_bool;
+    return (m_value.m_bool);
 }
 
 Json::operator int()
